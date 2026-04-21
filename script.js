@@ -1,3 +1,13 @@
+// ── Supabase config ──────────────────
+const SUPABASE_URL = 'https://euikuzrzsvlabkaqkopd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1aWt1enJ6c3ZsYWJrYXFrb3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NDQ3MjgsImV4cCI6MjA5MjMyMDcyOH0.QEJSWZnvkhq7VTr8dBRMIkKdCz6bhX3Hk795zMtrKDU';
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'apikey': SUPABASE_KEY,
+  'Authorization': `Bearer ${SUPABASE_KEY}`,
+};
+const DB = `${SUPABASE_URL}/rest/v1/gastos`;
+
 const BUDGET = 8000;
 
 const CATEGORIES = [
@@ -12,42 +22,79 @@ const CATEGORIES = [
 ];
 
 const SAMPLE_DATA = [
-  { id:'d01', amount:85,   desc:'Tacos de canasta',      cat:'food',    date:'2026-04-01' },
-  { id:'d02', amount:35,   desc:'Metro ida y vuelta',    cat:'trans',   date:'2026-04-01' },
-  { id:'d03', amount:320,  desc:'Súper semanal',         cat:'food',    date:'2026-04-03' },
-  { id:'d04', amount:200,  desc:'Gasolina',              cat:'trans',   date:'2026-04-04' },
-  { id:'d05', amount:450,  desc:'Farmacia',              cat:'health',  date:'2026-04-05' },
-  { id:'d06', amount:150,  desc:'Cine + palomitas',      cat:'fun',     date:'2026-04-06' },
-  { id:'d07', amount:89,   desc:'Spotify + Netflix',     cat:'fun',     date:'2026-04-06' },
-  { id:'d08', amount:800,  desc:'Tenis Nike',            cat:'clothes', date:'2026-04-07' },
-  { id:'d09', amount:65,   desc:'Comida corrida',        cat:'food',    date:'2026-04-08' },
-  { id:'d10', amount:280,  desc:'Uber semanal',          cat:'trans',   date:'2026-04-09' },
-  { id:'d11', amount:350,  desc:'Cena restaurante',      cat:'food',    date:'2026-04-10' },
-  { id:'d12', amount:180,  desc:'Luz del mes',           cat:'home',    date:'2026-04-11' },
-  { id:'d13', amount:120,  desc:'Agua purificada',       cat:'home',    date:'2026-04-12' },
-  { id:'d14', amount:75,   desc:'Desayuno café',         cat:'food',    date:'2026-04-14' },
-  { id:'d15', amount:350,  desc:'Concierto',             cat:'fun',     date:'2026-04-15' },
-  { id:'d16', amount:230,  desc:'Gasolina',              cat:'trans',   date:'2026-04-16' },
-  { id:'d17', amount:600,  desc:'Súper quincenal',       cat:'food',    date:'2026-04-17' },
-  { id:'d18', amount:45,   desc:'Estacionamiento',       cat:'trans',   date:'2026-04-18' },
-  { id:'d19', amount:699,  desc:'Camisa + pantalón',     cat:'clothes', date:'2026-04-19' },
-  { id:'d20', amount:800,  desc:'Dentista',              cat:'health',  date:'2026-04-19' },
-  { id:'d21', amount:110,  desc:'Sushi',                 cat:'food',    date:'2026-04-20' },
-  { id:'d22', amount:399,  desc:'Funda + cable iPhone',  cat:'tech',    date:'2026-04-20' },
+  { id:'d01', amount:85,   description:'Tacos de canasta',      cat:'food',    date:'2026-04-01' },
+  { id:'d02', amount:35,   description:'Metro ida y vuelta',    cat:'trans',   date:'2026-04-01' },
+  { id:'d03', amount:320,  description:'Súper semanal',         cat:'food',    date:'2026-04-03' },
+  { id:'d04', amount:200,  description:'Gasolina',              cat:'trans',   date:'2026-04-04' },
+  { id:'d05', amount:450,  description:'Farmacia',              cat:'health',  date:'2026-04-05' },
+  { id:'d06', amount:150,  description:'Cine + palomitas',      cat:'fun',     date:'2026-04-06' },
+  { id:'d07', amount:89,   description:'Spotify + Netflix',     cat:'fun',     date:'2026-04-06' },
+  { id:'d08', amount:800,  description:'Tenis Nike',            cat:'clothes', date:'2026-04-07' },
+  { id:'d09', amount:65,   description:'Comida corrida',        cat:'food',    date:'2026-04-08' },
+  { id:'d10', amount:280,  description:'Uber semanal',          cat:'trans',   date:'2026-04-09' },
+  { id:'d11', amount:350,  description:'Cena restaurante',      cat:'food',    date:'2026-04-10' },
+  { id:'d12', amount:180,  description:'Luz del mes',           cat:'home',    date:'2026-04-11' },
+  { id:'d13', amount:120,  description:'Agua purificada',       cat:'home',    date:'2026-04-12' },
+  { id:'d14', amount:75,   description:'Desayuno café',         cat:'food',    date:'2026-04-14' },
+  { id:'d15', amount:350,  description:'Concierto',             cat:'fun',     date:'2026-04-15' },
+  { id:'d16', amount:230,  description:'Gasolina',              cat:'trans',   date:'2026-04-16' },
+  { id:'d17', amount:600,  description:'Súper quincenal',       cat:'food',    date:'2026-04-17' },
+  { id:'d18', amount:45,   description:'Estacionamiento',       cat:'trans',   date:'2026-04-18' },
+  { id:'d19', amount:699,  description:'Camisa + pantalón',     cat:'clothes', date:'2026-04-19' },
+  { id:'d20', amount:800,  description:'Dentista',              cat:'health',  date:'2026-04-19' },
+  { id:'d21', amount:110,  description:'Sushi',                 cat:'food',    date:'2026-04-20' },
+  { id:'d22', amount:399,  description:'Funda + cable iPhone',  cat:'tech',    date:'2026-04-20' },
 ];
 
 // ── Estado ──────────────────────────
-let expenses   = JSON.parse(localStorage.getItem('gastos') || '[]');
+let expenses    = [];
 let selectedCat = CATEGORIES[0].id;
-let donutChart = null;
-let lineChart  = null;
+let donutChart  = null;
+let lineChart   = null;
 
-function save() { localStorage.setItem('gastos', JSON.stringify(expenses)); }
+// ── Supabase: cargar todos los gastos ─
+async function loadExpenses() {
+  showLoading(true);
+  try {
+    const res  = await fetch(`${DB}?order=date.asc`, { headers: HEADERS });
+    expenses   = await res.json();
+    if (!Array.isArray(expenses)) expenses = [];
+  } catch (e) {
+    console.error('Error cargando datos:', e);
+    expenses = [];
+  }
+  showLoading(false);
+  render();
+}
 
+// ── Supabase: guardar un gasto ────────
+async function saveExpense(expense) {
+  await fetch(DB, {
+    method:  'POST',
+    headers: { ...HEADERS, 'Prefer': 'return=minimal' },
+    body:    JSON.stringify(expense),
+  });
+}
+
+// ── Supabase: eliminar un gasto ───────
+async function deleteExpense(id) {
+  await fetch(`${DB}?id=eq.${id}`, { method: 'DELETE', headers: HEADERS });
+  expenses = expenses.filter(e => e.id !== id);
+  render();
+}
+
+// ── Loading state ─────────────────────
+function showLoading(on) {
+  document.getElementById('transactionsList').innerHTML = on
+    ? `<div class="empty-state"><div class="empty-icon">⏳</div><p>Cargando datos...</p></div>`
+    : '';
+}
+
+// ── Helpers ───────────────────────────
 function today() { return new Date().toISOString().split('T')[0]; }
 
 function fmt(n) {
-  return '$' + n.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return '$' + Number(n).toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function setGreeting() {
@@ -71,16 +118,16 @@ function currentMonthExpenses() {
 
 // ── Tarjeta principal ────────────────
 function renderCard() {
-  const month  = currentMonthExpenses();
-  const total  = month.reduce((s, e) => s + e.amount, 0);
-  const pct    = Math.min((total / BUDGET) * 100, 100);
-  const over   = total > BUDGET;
-  const days   = new Date().getDate();
-  const avg    = days > 0 ? total / days : 0;
-  const max    = month.length ? month.reduce((a, b) => b.amount > a.amount ? b : a) : null;
+  const month = currentMonthExpenses();
+  const total = month.reduce((s, e) => s + Number(e.amount), 0);
+  const pct   = Math.min((total / BUDGET) * 100, 100);
+  const over  = total > BUDGET;
+  const days  = new Date().getDate();
+  const avg   = days > 0 ? total / days : 0;
+  const max   = month.length ? month.reduce((a, b) => Number(b.amount) > Number(a.amount) ? b : a) : null;
 
   document.getElementById('totalAmount').textContent = fmt(total);
-  document.getElementById('budgetPct').textContent   = Math.round((total/BUDGET)*100) + '%';
+  document.getElementById('budgetPct').textContent   = Math.round((total / BUDGET) * 100) + '%';
   document.getElementById('countMonth').textContent  = month.length;
   document.getElementById('avgDay').textContent      = fmt(avg);
   document.getElementById('maxExpense').textContent  = max ? fmt(max.amount) : '—';
@@ -89,7 +136,6 @@ function renderCard() {
   fill.style.width = pct + '%';
   fill.classList.toggle('over', over);
 
-  // Mini stats desktop
   const remaining = BUDGET - total;
   document.getElementById('miniStats').innerHTML = `
     <div class="mini-card">
@@ -108,10 +154,10 @@ function renderCard() {
 
 // ── Gráfica dona ─────────────────────
 function renderDonut() {
-  const month = currentMonthExpenses();
+  const month   = currentMonthExpenses();
   const catData = CATEGORIES.map(c => ({
     ...c,
-    total: month.filter(e => e.cat === c.id).reduce((s, e) => s + e.amount, 0)
+    total: month.filter(e => e.cat === c.id).reduce((s, e) => s + Number(e.amount), 0)
   })).filter(c => c.total > 0);
 
   const chartData = {
@@ -119,32 +165,18 @@ function renderDonut() {
     datasets: [{
       data:            catData.map(c => c.total),
       backgroundColor: catData.map(c => c.color),
-      borderWidth: 2,
-      borderColor: '#16161f',
-      hoverOffset: 10,
+      borderWidth: 2, borderColor: '#16161f', hoverOffset: 10,
     }]
   };
 
-  if (donutChart) {
-    donutChart.data = chartData;
-    donutChart.update();
-    return;
-  }
-
+  if (donutChart) { donutChart.data = chartData; donutChart.update(); return; }
   donutChart = new Chart(document.getElementById('donutChart'), {
-    type: 'doughnut',
-    data: chartData,
+    type: 'doughnut', data: chartData,
     options: {
-      responsive: true,
-      cutout: '68%',
+      responsive: true, cutout: '68%',
       plugins: {
-        legend: {
-          position: 'bottom',
-          labels: { color: 'rgba(255,255,255,0.6)', font: { size: 11 }, padding: 12 }
-        },
-        tooltip: {
-          callbacks: { label: ctx => ` ${fmt(ctx.parsed)}` }
-        }
+        legend: { position: 'bottom', labels: { color: 'rgba(255,255,255,0.6)', font: { size: 11 }, padding: 12 } },
+        tooltip: { callbacks: { label: ctx => ` ${fmt(ctx.parsed)}` } }
       }
     }
   });
@@ -152,46 +184,35 @@ function renderDonut() {
 
 // ── Gráfica acumulada ─────────────────
 function renderLine() {
-  const month = currentMonthExpenses();
+  const month    = currentMonthExpenses();
   const todayDay = new Date().getDate();
-
-  const byDay = {};
+  const byDay    = {};
   month.forEach(e => {
     const day = parseInt(e.date.split('-')[2]);
-    byDay[day] = (byDay[day] || 0) + e.amount;
+    byDay[day] = (byDay[day] || 0) + Number(e.amount);
   });
 
   const maxDay = Math.max(todayDay, ...Object.keys(byDay).map(Number), 1);
   let cumulative = 0;
-  const labels   = [];
-  const dataAcc  = [];
-
+  const labels = [], dataAcc = [];
   for (let d = 1; d <= maxDay; d++) {
     cumulative += byDay[d] || 0;
     labels.push(d);
     dataAcc.push(parseFloat(cumulative.toFixed(2)));
   }
 
-  const budgetLine = labels.map(() => BUDGET);
-
   const chartData = {
     labels,
     datasets: [
       {
-        label: 'Gasto acumulado',
-        data: dataAcc,
-        borderColor: '#7c6af7',
-        backgroundColor: 'rgba(124,106,247,0.12)',
-        fill: true, tension: 0.4,
-        pointRadius: 3, pointBackgroundColor: '#7c6af7',
+        label: 'Gasto acumulado', data: dataAcc,
+        borderColor: '#7c6af7', backgroundColor: 'rgba(124,106,247,0.12)',
+        fill: true, tension: 0.4, pointRadius: 3, pointBackgroundColor: '#7c6af7',
       },
       {
-        label: `Presupuesto (${fmt(BUDGET)})`,
-        data: budgetLine,
-        borderColor: '#f76ab4',
-        borderDash: [6, 4],
-        pointRadius: 0, fill: false,
-        borderWidth: 1.5,
+        label: `Presupuesto (${fmt(BUDGET)})`, data: labels.map(() => BUDGET),
+        borderColor: '#f76ab4', borderDash: [6, 4],
+        pointRadius: 0, fill: false, borderWidth: 1.5,
       }
     ]
   };
@@ -204,37 +225,25 @@ function renderLine() {
       tooltip: { callbacks: { label: ctx => ` ${fmt(ctx.parsed.y)}` } }
     },
     scales: {
-      x: {
-        ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 11 } },
-        grid:  { color: 'rgba(255,255,255,0.04)' },
-        title: { display: true, text: 'Día del mes', color: 'rgba(255,255,255,0.3)', font: { size: 11 } }
-      },
-      y: {
-        ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 11 }, callback: v => '$' + v.toLocaleString() },
-        grid:  { color: 'rgba(255,255,255,0.04)' },
-      }
+      x: { ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      y: { ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 11 }, callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.04)' } }
     }
   };
 
-  if (lineChart) {
-    lineChart.data = chartData;
-    lineChart.update();
-    return;
-  }
-
+  if (lineChart) { lineChart.data = chartData; lineChart.update(); return; }
   lineChart = new Chart(document.getElementById('lineChart'), { type: 'line', data: chartData, options: opts });
 }
 
 // ── Categorías ────────────────────────
 function renderCategories() {
-  const month   = currentMonthExpenses();
-  const total   = month.reduce((s, e) => s + e.amount, 0);
-  const grid    = document.getElementById('categoriesGrid');
+  const month = currentMonthExpenses();
+  const total = month.reduce((s, e) => s + Number(e.amount), 0);
+  const grid  = document.getElementById('categoriesGrid');
   grid.innerHTML = '';
 
   const catData = CATEGORIES.map(c => ({
     ...c,
-    total: month.filter(e => e.cat === c.id).reduce((s, e) => s + e.amount, 0)
+    total: month.filter(e => e.cat === c.id).reduce((s, e) => s + Number(e.amount), 0)
   })).filter(c => c.total > 0).sort((a, b) => b.total - a.total);
 
   if (!catData.length) {
@@ -285,7 +294,7 @@ function renderTransactions() {
     div.innerHTML = `
       <div class="tx-icon" style="background:${cat.bg}">${cat.icon}</div>
       <div class="tx-info">
-        <p class="tx-desc">${e.desc || cat.label}</p>
+        <p class="tx-desc">${e.description || cat.label}</p>
         <p class="tx-meta">${cat.label} · ${dateStr}</p>
       </div>
       <div class="tx-right">
@@ -296,10 +305,7 @@ function renderTransactions() {
   });
 
   list.querySelectorAll('.tx-delete').forEach(btn => {
-    btn.addEventListener('click', () => {
-      expenses = expenses.filter(e => e.id !== btn.dataset.id);
-      save(); render();
-    });
+    btn.addEventListener('click', () => deleteExpense(btn.dataset.id));
   });
 }
 
@@ -353,40 +359,50 @@ function buildCatPicker() {
 }
 
 // ── Guardar gasto ─────────────────────
-document.getElementById('btnSave').addEventListener('click', () => {
+document.getElementById('btnSave').addEventListener('click', async () => {
   const amount = parseFloat(document.getElementById('inputAmount').value);
   const desc   = document.getElementById('inputDesc').value.trim();
   const date   = document.getElementById('inputDate').value;
   if (!amount || amount <= 0) { document.getElementById('inputAmount').focus(); return; }
 
-  expenses.push({ id: Date.now().toString(), amount, desc, cat: selectedCat, date: date || today() });
-  save(); render(); closeModal();
-});
+  const expense = {
+    id:          Date.now().toString(),
+    amount,
+    description: desc,
+    cat:         selectedCat,
+    date:        date || today(),
+  };
 
-// ── Borrar todo ───────────────────────
-document.getElementById('btnClearAll').addEventListener('click', () => {
-  if (!currentMonthExpenses().length) return;
-  if (confirm('¿Borrar todos los gastos de este mes?')) {
-    const now = new Date();
-    expenses = expenses.filter(e => {
-      const d = new Date(e.date + 'T12:00:00');
-      return !(d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear());
-    });
-    save(); render();
-  }
+  closeModal();
+  await saveExpense(expense);
+  await loadExpenses();
 });
 
 // ── Cargar datos de prueba ────────────
-document.getElementById('btnDemo').addEventListener('click', () => {
-  const existing = expenses.map(e => e.id);
-  const toAdd    = SAMPLE_DATA.filter(e => !existing.includes(e.id));
+document.getElementById('btnDemo').addEventListener('click', async () => {
+  const existingIds = expenses.map(e => e.id);
+  const toAdd       = SAMPLE_DATA.filter(e => !existingIds.includes(e.id));
   if (!toAdd.length) { alert('Los datos de prueba ya están cargados.'); return; }
-  expenses.push(...toAdd);
-  save(); render();
+
+  await Promise.all(toAdd.map(e => saveExpense(e)));
+  await loadExpenses();
+});
+
+// ── Borrar todo ───────────────────────
+document.getElementById('btnClearAll').addEventListener('click', async () => {
+  if (!currentMonthExpenses().length) return;
+  if (!confirm('¿Borrar todos los gastos de este mes?')) return;
+
+  const now   = new Date();
+  const toDelete = currentMonthExpenses();
+  await Promise.all(toDelete.map(e =>
+    fetch(`${DB}?id=eq.${e.id}`, { method: 'DELETE', headers: HEADERS })
+  ));
+  await loadExpenses();
 });
 
 // ── Init ──────────────────────────────
 setGreeting();
 document.getElementById('btnMonth').textContent = monthLabel();
 buildCatPicker();
-render();
+loadExpenses();
