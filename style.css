@@ -1,5 +1,92 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ── Login Screen ── */
+#loginScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg, #0d0d14);
+  background-image: radial-gradient(ellipse at 60% 20%, rgba(124,106,247,0.15), transparent 60%),
+                    radial-gradient(ellipse at 20% 80%, rgba(247,106,180,0.1), transparent 50%);
+  padding: 20px;
+}
+
+.login-card {
+  background: #16161f;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 24px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.login-icon  { font-size: 48px; margin-bottom: 12px; }
+.login-title { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 6px; color: #f0f0f5; }
+.login-sub   { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 28px; }
+
+.login-field {
+  text-align: left;
+  margin-bottom: 14px;
+}
+.login-field label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 6px;
+}
+.login-field input {
+  width: 100%;
+  background: #1e1e2a;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: #f0f0f5;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.login-field input:focus { border-color: rgba(124,106,247,0.6); }
+.login-field input::placeholder { color: rgba(255,255,255,0.2); }
+
+.login-error {
+  color: #ff6b6b;
+  font-size: 13px;
+  min-height: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7c6af7, #f76ab4);
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  margin-top: 4px;
+}
+.btn-login:hover  { opacity: 0.9; }
+.btn-login:active { transform: scale(0.98); }
+.btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-logout {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-logout:hover { color: #ff6b6b; border-color: rgba(255,107,107,0.4); }
+
 :root {
   --bg: #0d0d14;
   --surface: #16161f;

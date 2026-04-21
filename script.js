@@ -1,12 +1,86 @@
 // ── Supabase config ──────────────────
 const SUPABASE_URL = 'https://euikuzrzsvlabkaqkopd.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1aWt1enJ6c3ZsYWJrYXFrb3BkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NDQ3MjgsImV4cCI6MjA5MjMyMDcyOH0.QEJSWZnvkhq7VTr8dBRMIkKdCz6bhX3Hk795zMtrKDU';
-const HEADERS = {
-  'Content-Type': 'application/json',
-  'apikey': SUPABASE_KEY,
-  'Authorization': `Bearer ${SUPABASE_KEY}`,
-};
-const DB = `${SUPABASE_URL}/rest/v1/gastos`;
+const DB       = `${SUPABASE_URL}/rest/v1/gastos`;
+const AUTH_URL = `${SUPABASE_URL}/auth/v1`;
+
+// Token se guarda en sessionStorage (se borra al cerrar el navegador)
+let accessToken = sessionStorage.getItem('sb_token') || null;
+
+function getHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${accessToken || SUPABASE_KEY}`,
+  };
+}
+
+// ── Autenticación ─────────────────────
+async function login(email, password) {
+  const btn   = document.getElementById('btnLogin');
+  const error = document.getElementById('loginError');
+  btn.disabled    = true;
+  btn.textContent = 'Entrando...';
+  error.textContent = '';
+
+  try {
+    const res  = await fetch(`${AUTH_URL}/token?grant_type=password`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body:    JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+
+    if (data.access_token) {
+      accessToken = data.access_token;
+      sessionStorage.setItem('sb_token', accessToken);
+      showApp();
+    } else {
+      error.textContent = 'Correo o contraseña incorrectos.';
+    }
+  } catch (e) {
+    error.textContent = 'Error de conexión. Intenta de nuevo.';
+  }
+
+  btn.disabled    = false;
+  btn.textContent = 'Entrar';
+}
+
+function logout() {
+  accessToken = null;
+  sessionStorage.removeItem('sb_token');
+  document.getElementById('appContent').style.display  = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('loginEmail').value    = '';
+  document.getElementById('loginPassword').value = '';
+}
+
+function showApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appContent').style.display  = 'block';
+  setGreeting();
+  document.getElementById('btnMonth').textContent = monthLabel();
+  buildCatPicker();
+  loadExpenses();
+}
+
+// ── Eventos de login ──────────────────
+document.getElementById('btnLogin').addEventListener('click', () => {
+  const email    = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!email || !password) {
+    document.getElementById('loginError').textContent = 'Ingresa tu correo y contraseña.';
+    return;
+  }
+  login(email, password);
+});
+
+// Login con Enter
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('btnLogin').click();
+});
+
+document.getElementById('btnLogout').addEventListener('click', logout);
 
 const BUDGET = 8000;
 
@@ -56,7 +130,7 @@ let lineChart   = null;
 async function loadExpenses() {
   showLoading(true);
   try {
-    const res  = await fetch(`${DB}?order=date.asc`, { headers: HEADERS });
+    const res  = await fetch(`${DB}?order=date.asc`, { headers: getHeaders() });
     expenses   = await res.json();
     if (!Array.isArray(expenses)) expenses = [];
   } catch (e) {
@@ -71,14 +145,14 @@ async function loadExpenses() {
 async function saveExpense(expense) {
   await fetch(DB, {
     method:  'POST',
-    headers: { ...HEADERS, 'Prefer': 'return=minimal' },
+    headers: { ...getHeaders(), 'Prefer': 'return=minimal' },
     body:    JSON.stringify(expense),
   });
 }
 
 // ── Supabase: eliminar un gasto ───────
 async function deleteExpense(id) {
-  await fetch(`${DB}?id=eq.${id}`, { method: 'DELETE', headers: HEADERS });
+  await fetch(`${DB}?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
   expenses = expenses.filter(e => e.id !== id);
   render();
 }
@@ -402,7 +476,9 @@ document.getElementById('btnClearAll').addEventListener('click', async () => {
 });
 
 // ── Init ──────────────────────────────
-setGreeting();
-document.getElementById('btnMonth').textContent = monthLabel();
-buildCatPicker();
-loadExpenses();
+if (accessToken) {
+  showApp();
+} else {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('appContent').style.display  = 'none';
+}
