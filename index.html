@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MisGastos</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-top">
+      <div>
+        <p class="greeting" id="greeting">Buenos días</p>
+        <h1 class="app-name">MisGastos</h1>
+      </div>
+      <button class="btn-month" id="btnMonth">Abril 2026</button>
+    </div>
+
+    <!-- Tarjeta principal -->
+    <div class="card-total">
+      <p class="card-label">Gastado este mes</p>
+      <h2 class="card-amount" id="totalAmount">$0.00</h2>
+      <div class="budget-row">
+        <span id="budgetLabel">Presupuesto: $5,000</span>
+        <span id="budgetPct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="card-stats">
+        <div class="stat">
+          <span class="stat-label">Este mes</span>
+          <span class="stat-val" id="countMonth">0 gastos</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-label">Mayor gasto</span>
+          <span class="stat-val" id="maxExpense">—</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Categorías -->
+  <section class="section">
+    <h3 class="section-title">Por categoría</h3>
+    <div class="categories-grid" id="categoriesGrid"></div>
+  </section>
+
+  <!-- Transacciones -->
+  <section class="section">
+    <div class="section-header">
+      <h3 class="section-title">Movimientos</h3>
+      <button class="btn-clear-all" id="btnClearAll">Borrar todo</button>
+    </div>
+    <div class="transactions" id="transactionsList">
+      <div class="empty-state">
+        <div class="empty-icon">💸</div>
+        <p>Aún no hay gastos</p>
+        <p class="empty-sub">Toca + para agregar uno</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Botón flotante -->
+  <button class="fab" id="fabBtn">+</button>
+
+  <!-- Modal agregar gasto -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">Nuevo gasto</h3>
+
+      <div class="amount-input-wrap">
+        <span class="currency-sign">$</span>
+        <input type="number" id="inputAmount" placeholder="0.00" min="0" step="0.01"/>
+      </div>
+
+      <input type="text" class="desc-input" id="inputDesc" placeholder="¿En qué gastaste?"/>
+
+      <p class="field-label">Categoría</p>
+      <div class="cat-picker" id="catPicker"></div>
+
+      <p class="field-label">Fecha</p>
+      <input type="date" class="date-input" id="inputDate"/>
+
+      <button class="btn-save" id="btnSave">Guardar gasto</button>
+      <button class="btn-cancel" id="btnCancel">Cancelar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
